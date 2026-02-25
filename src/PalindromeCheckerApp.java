@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.Stack;
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
@@ -12,6 +12,7 @@ public class PalindromeCheckerApp {
 
         System.out.print("Enter a word: ");
         String word = scanner.nextLine();
+uc5StackPalindrome(word);
 
         String cleaned = word.replaceAll("\\s+", "").toLowerCase();
         String reversed = "";
@@ -28,4 +29,29 @@ public class PalindromeCheckerApp {
 
         scanner.close();
     }
+public static void uc5StackPalindrome(String input) {
+
+    Stack<Character> stack = new Stack<>();
+
+    // Push characters into stack
+    for (char ch : input.toCharArray()) {
+        stack.push(ch);
+    }
+
+    boolean isPalindrome = true;
+
+    // Pop and compare
+    for (char ch : input.toCharArray()) {
+        if (ch != stack.pop()) {
+            isPalindrome = false;
+            break;
+        }
+    }
+
+    if (isPalindrome) {
+        System.out.println("UC5 Result: Palindrome");
+    } else {
+        System.out.println("UC5 Result: Not Palindrome");
+    }
+}
 }
