@@ -1,2 +1,1 @@
-public class PalindromeCheckerApp {
-}
+public class PalindromeCheckerApp
