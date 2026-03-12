@@ -1,29 +1,84 @@
 
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
-    // UC7: Deque-Based Palindrome Check
-    public static boolean checkPalindromeDeque(String input) {
+    // Node class for Linked List
+    static class Node {
+        char data;
+        Node next;
 
-        Deque<Character> deque = new LinkedList<>();
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+    // Convert string to linked list
+    public static Node createList(String input) {
+        Node head = null;
+        Node tail = null;
+
+        for (char ch : input.toCharArray()) {
+            Node newNode = new Node(ch);
+
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
 
-        // Compare front and rear characters
-        while (deque.size() > 1) {
+        return head;
+    }
 
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
+    // Reverse linked list
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
 
-            if (first != last) {
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Palindrome check using linked list
+    public static boolean checkPalindromeLinkedList(String input) {
+
+        Node head = createList(input);
+
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle using fast & slow pointer
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow.next);
+
+        Node firstHalf = head;
+        Node tempSecond = secondHalf;
+
+        // Compare halves
+        while (tempSecond != null) {
+            if (firstHalf.data != tempSecond.data) {
                 return false;
             }
+            firstHalf = firstHalf.next;
+            tempSecond = tempSecond.next;
         }
 
         return true;
@@ -35,13 +90,13 @@ public class PalindromeCheckerApp {
 
         System.out.println("================================");
         System.out.println("      PALINDROME CHECKER APP    ");
-        System.out.println("       UC7: Deque Method        ");
+        System.out.println("      UC8: Linked List Method   ");
         System.out.println("================================");
 
         System.out.print("Enter a word: ");
         String input = scanner.nextLine();
 
-        boolean result = checkPalindromeDeque(input);
+        boolean result = checkPalindromeLinkedList(input);
 
         if (result) {
             System.out.println(input + " is a Palindrome");
