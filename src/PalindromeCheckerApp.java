@@ -3,18 +3,27 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    // UC3: Palindrome Check Using String Reverse
-    public static boolean checkPalindromeReverse(String input) {
+    // UC4: Palindrome Check using Character Array
+    public static boolean checkPalindromeCharArray(String input) {
 
-        String reversed = "";
+        // Convert string to char array
+        char[] chars = input.toCharArray();
 
-        // Reverse the string using loop
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed = reversed + input.charAt(i);
+        int start = 0;
+        int end = chars.length - 1;
+
+        // Two-pointer comparison
+        while (start < end) {
+
+            if (chars[start] != chars[end]) {
+                return false;
+            }
+
+            start++;
+            end--;
         }
 
-        // Compare original and reversed string
-        return input.equals(reversed);
+        return true;
     }
 
     public static void main(String[] args) {
@@ -23,13 +32,13 @@ public class PalindromeCheckerApp {
 
         System.out.println("================================");
         System.out.println("      PALINDROME CHECKER APP    ");
-        System.out.println("      UC3: String Reverse       ");
+        System.out.println("   UC4: Character Array Method  ");
         System.out.println("================================");
 
         System.out.print("Enter a word: ");
         String input = scanner.nextLine();
 
-        boolean result = checkPalindromeReverse(input);
+        boolean result = checkPalindromeCharArray(input);
 
         if (result) {
             System.out.println(input + " is a Palindrome");
