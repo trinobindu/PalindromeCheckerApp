@@ -1,24 +1,31 @@
 
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
-    // UC5: Palindrome Check using Stack
-    public static boolean checkPalindromeStack(String input) {
+    // UC6: Queue + Stack Palindrome Check
+    public static boolean checkPalindromeQueueStack(String input) {
 
         Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
 
-        // Push characters into stack
+        // Push and Enqueue characters
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            stack.push(ch);      // LIFO
+            queue.add(ch);       // FIFO
         }
 
-        // Pop characters and compare
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) != stack.pop()) {
+        // Compare dequeue and pop
+        while (!stack.isEmpty()) {
+
+            if (stack.pop() != queue.remove()) {
                 return false;
             }
+
         }
 
         return true;
@@ -30,13 +37,13 @@ public class PalindromeCheckerApp {
 
         System.out.println("================================");
         System.out.println("      PALINDROME CHECKER APP    ");
-        System.out.println("      UC5: Stack Method         ");
+        System.out.println("     UC6: Queue + Stack Method  ");
         System.out.println("================================");
 
         System.out.print("Enter a word: ");
         String input = scanner.nextLine();
 
-        boolean result = checkPalindromeStack(input);
+        boolean result = checkPalindromeQueueStack(input);
 
         if (result) {
             System.out.println(input + " is a Palindrome");
